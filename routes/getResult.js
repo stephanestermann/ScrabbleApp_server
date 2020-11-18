@@ -1,4 +1,6 @@
-var db = require("../database.js")
+let path = require('path'); 
+let {db} = require("../database.js")
+const {DBSOURCE} = require("../database.js")
 
 module.exports = {
     getResults: function (req, res) {
@@ -14,7 +16,20 @@ module.exports = {
                 "data": rows
             })
         });
-    }
+    },
+    getDatabase: function (req, res, next) {
+        const fileName = DBSOURCE;
+        const options = { 
+            root: path.join(__dirname, '../') 
+        }; 
+        res.sendFile(fileName, options, function (err) { 
+            if (err) { 
+                next(err); 
+            } else { 
+                console.log('Sent:', fileName); 
+            } 
+        }); 
+    }    
 }
 
 function isValid(req) {

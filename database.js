@@ -7,7 +7,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
       // Cannot open database
       console.error(err.message)
       throw err
-    }else{
+    } else {
         console.debug('Connected to the SQLite database (Stephs Scrabble App).')
         db.run(`CREATE TABLE scrabble_results (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -18,7 +18,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
                     number_doubtes INTEGER,
                     number_wrong_doubtes INTEGER,
                     number_correct_doubtes INTEGER,  
-                    game_ended BOOLEAN NOT NULL CHECK (won IN (0,1)),
+                    game_ended BOOLEAN NOT NULL CHECK (game_ended IN (0,1)),
                     left_points INTEGER
                 )`,
         (err) => {
@@ -33,4 +33,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
 });
 
 
-module.exports = db
+module.exports = {
+    db,
+    DBSOURCE
+}

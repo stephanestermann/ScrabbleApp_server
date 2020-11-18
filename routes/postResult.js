@@ -1,4 +1,4 @@
-var db = require("../database.js")
+var {db} = require("../database.js")
 
 module.exports = {
     postResult: function (req, res) {
