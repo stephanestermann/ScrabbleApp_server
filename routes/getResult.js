@@ -1,9 +1,28 @@
 let path = require('path'); 
 let {db} = require("../database.js")
 const {DBSOURCE} = require("../database.js")
+let ResultStatistic = require('../models/resultStatistic.js');
 
 module.exports = {
     getResults: function (req, res) {
+        const getAllSql ='select * from scrabble_results'
+
+        db.all(getAllSql, [], function (err, rows) {
+            if (err){
+                res.status(400).json({"error": err.message})
+                return;
+            }
+            let resultAnica = new ResultStatistic(1);
+            resultAnica.addRows(rows);
+            let resultSteph = new ResultStatistic(2);
+            resultSteph.addRows(rows);
+            res.json({
+                "message": "Resultate refolgreich gelesen",
+                "data": [resultAnica, resultSteph]
+            })
+        });
+    },
+    getSummarizedResults: function (req, res) {
         const getAllSql ='select * from scrabble_results'
 
         db.all(getAllSql, [], function (err, rows) {
