@@ -10,8 +10,11 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
     } else {
         console.debug('Connected to the SQLite database (Stephs Scrabble App).')
         db.run(`CREATE TABLE scrabble_results (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,                    
                     scrabbler_id INTEGER NOT NULL,
+                    game_id TEXT NOT NULL,
+                    game_date DATETIME NOT NULL,
+                    beginner BOOLEAN NOT NULL CHECK (beginner IN (0,1)),
                     point INTEGER NOT NULL,
                     won BOOLEAN NOT NULL CHECK (won IN (0,1)),
                     number_bingos INTEGER,

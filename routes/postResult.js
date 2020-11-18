@@ -1,4 +1,6 @@
-var {db} = require("../database.js")
+var {db} = require("../database.js");
+var moment = require('moment');
+const {v4 : uuidv4} = require('uuid')
 
 module.exports = {
     postResult: function (req, res) {
@@ -6,9 +8,9 @@ module.exports = {
             return;
         }
         const resultRecords = getRecords(req)
-        const resultPlaceholders = resultRecords.map(() => "(?, ?, ?, ?, ?, ?, ?, ?, ?)").join(', ');
+        const resultPlaceholders = resultRecords.map(() => "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)").join(', ');
         const insertSql ='INSERT INTO scrabble_results' + 
-            '(scrabbler_id, point, won, number_bingos, number_doubtes, number_wrong_doubtes, number_correct_doubtes, game_ended, left_points)' +
+            '(scrabbler_id, game_id, game_date, beginner, point, won, number_bingos, number_doubtes, number_wrong_doubtes, number_correct_doubtes, game_ended, left_points)' +
              'VALUES ' + resultPlaceholders
         let flatResults = [];
         resultRecords.forEach((arr) => { arr.forEach((item) => { flatResults.push(item) }) });
@@ -45,10 +47,16 @@ function isValid(req) {
 
 function getRecords(req) {
     const body = req.body;
+    const saveDate = moment();
+    const gameId = uuidv4()
     let  records = [];
+
     [0,1].forEach(entry => {
         let record = [];
         record.push(body.scrabbler_ids[entry]);
+        record.push(gameId)
+        record.push(saveDate)
+        record.push(body.beginner[entry]);
         record.push(body.points[entry]);
         record.push(body.won[entry]);
         record.push(body.number_bingos[entry]);
