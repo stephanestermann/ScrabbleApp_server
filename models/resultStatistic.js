@@ -1,28 +1,28 @@
 module.exports = class ResultStatistic {
     constructor(scrabblerId) {
        this.scrabblerId = scrabblerId;
-       this.beginner = 0;
-       this.point = 0;
-       this.won = 0;
-       this.numberBingos = 0;
-       this.numberDoubtes = 0;
-       this.numberWrongDoubtes = 0;       
-       this.numberCorrectDoubtes = 0;
-       this.gameEnded = 0;
-       this.leftPoints = 0;
+       this.totBegins = 0;
+       this.totPoints = 0;
+       this.totWins = 0;
+       this.totBingos = 0;
+       this.totDoubtes = 0;
+       this.totWrongDoubtes = 0;       
+       this.totCorrectDoubtes = 0;
+       this.totGamesEnded = 0;
+       this.totLeftPoints = 0;
     }
     addRows(rows) {
       rows.forEach(ele => {
          if(ele.scrabbler_id === this.scrabblerId) {
-            ele.beginner ? this.beginner++ : null;
-            this.point += ele.point;
-            ele.won ? this.won++ : null;
-            this.numberBingos += ele.number_bingos;
-            this.numberDoubtes += ele.number_doubtes;
-            this.numberCorrectDoubtes += ele.number_correct_doubtes;
-            this.numberWrongDoubtes += ele.number_wrong_doubtes;
-            ele.game_ended ? this.gameEnded++ : null;
-            this.leftPoints += ele.left_points;
+            ele.beginner ? this.totBegins++ : null;
+            this.totPoints += ele.point;
+            ele.won ? this.totWins++ : null;
+            this.totBingos += ele.number_bingos;
+            this.totDoubtes += ele.number_doubtes;
+            this.totCorrectDoubtes += ele.number_correct_doubtes;
+            this.totWrongDoubtes += ele.number_wrong_doubtes;
+            ele.game_ended ? this.totGamesEnded++ : null;
+            this.totLeftPoints += ele.left_points;
          }         
       });
     }
