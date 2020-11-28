@@ -22,7 +22,9 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
                     number_wrong_doubtes INTEGER,
                     number_correct_doubtes INTEGER,  
                     game_ended BOOLEAN NOT NULL CHECK (game_ended IN (0,1)),
-                    left_points INTEGER
+                    left_points INTEGER,
+                    largest_bingoscore INTEGER NOT NULL DEFAULT 0,
+                    largest_non_bingoscore INTEGER NOT NULL DEFAULT 0
                 )`,
         (err) => {
             if (err) {

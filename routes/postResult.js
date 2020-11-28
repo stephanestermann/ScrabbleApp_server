@@ -8,9 +8,11 @@ module.exports = {
             return;
         }
         const resultRecords = getRecords(req)
-        const resultPlaceholders = resultRecords.map(() => "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)").join(', ');
+        const resultPlaceholders = resultRecords.map(() => "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)").join(', ');
         const insertSql ='INSERT INTO scrabble_results' + 
-            '(scrabbler_id, game_id, game_date, beginner, point, won, number_bingos, number_doubtes, number_wrong_doubtes, number_correct_doubtes, game_ended, left_points)' +
+            '(scrabbler_id, game_id, game_date, beginner, point, won, number_bingos, number_doubtes,' +
+            ' number_wrong_doubtes, number_correct_doubtes, game_ended, left_points,' +
+            ' largest_bingoscore, largest_non_bingoscore)' +
              'VALUES ' + resultPlaceholders
         let flatResults = [];
         resultRecords.forEach((arr) => { arr.forEach((item) => { flatResults.push(item) }) });
@@ -65,6 +67,8 @@ function getRecords(req) {
         record.push(body.number_correct_doubtes[entry]);
         record.push(body.game_ended[entry]);
         record.push(body.left_points[entry]);
+        record.push(body.largestBingoScore[entry]);
+        record.push(body.largestNonBingoScore[entry]);
         records.push(record);
     });
     return records;
