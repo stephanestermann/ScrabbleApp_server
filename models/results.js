@@ -11,7 +11,9 @@ class Result {
        this.numberCorrectDoubtes = rows.number_correct_doubtes;
        this.gameEnded = rows.game_ended;
        this.leftPoints = rows.left_points;
-    }   
+       this.largestBingoScore = rows.largest_bingoscore;
+       this.largestNonBingoScore = rows.largest_non_bingoscore;
+      }   
     print(){
        console.log('Name is :'+ this.scrabblerId);
     }
