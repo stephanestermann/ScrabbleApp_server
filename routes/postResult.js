@@ -49,7 +49,7 @@ function isValid(req) {
 
 function getRecords(req) {
     const body = req.body;
-    const saveDate = moment();
+    const saveDate = moment().format('YYYY-MM-DD HH:mm:ss.SSS');
     const gameId = uuidv4()
     let  records = [];
 
