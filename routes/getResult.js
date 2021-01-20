@@ -54,14 +54,14 @@ module.exports = {
 }
 
 function getSummarizedResultsSql(req) {
-    if (req.query?.date) {
+    if (req.query && req.query.date) {
         let range
         let addUnit
-        if (req.query?.month) {
+        if (req.query && req.query.month) {
             range = 'month'
             addUnit = 'M'
         }
-        if (req.query?.year) {
+        if (req.query && req.query.year) {
             range = 'year'
             addUnit = 'y'
         }    
