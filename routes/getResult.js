@@ -1,13 +1,29 @@
 let path = require('path'); 
 let {db} = require("../database.js")
+let moment = require('moment');
+
 const {DBSOURCE} = require("../database.js")
 let ResultStatistic = require('../models/resultStatistic.js');
+const getAllSql ='select * from scrabble_results'
+ 
 
 module.exports = {
     getResults: function (req, res) {
-        const getAllSql ='select * from scrabble_results'
-
         db.all(getAllSql, [], function (err, rows) {
+            if (err){
+                res.status(400).json({"error": err.message})
+                return;
+            }
+            res.json({
+                "message": "Resultate refolgreich gelesen",
+                "data": rows
+            })
+        });
+    },
+    getSummarizedResults: function (req, res) {
+        const sql = getSummarizedResultsSql(req)
+
+        db.all(sql, [], function (err, rows) {
             if (err){
                 res.status(400).json({"error": err.message})
                 return;
@@ -19,20 +35,6 @@ module.exports = {
             res.json({
                 "message": "Resultate refolgreich gelesen",
                 "data": [resultAnica, resultSteph]
-            })
-        });
-    },
-    getSummarizedResults: function (req, res) {
-        const getAllSql ='select * from scrabble_results'
-
-        db.all(getAllSql, [], function (err, rows) {
-            if (err){
-                res.status(400).json({"error": err.message})
-                return;
-            }
-            res.json({
-                "message": "Resultate refolgreich gelesen",
-                "data": rows
             })
         });
     },
@@ -51,36 +53,23 @@ module.exports = {
     }    
 }
 
-function isValid(req) {
-    let errors=[]
-    if (!req.body.scrabbler_ids[0] && req.body.scrabbler_ids[1]){
-        errors.push("Missing scrabble user id's");
+function getSummarizedResultsSql(req) {
+    if (req.query?.date) {
+        let range
+        let addUnit
+        if (req.query?.month) {
+            range = 'month'
+            addUnit = 'M'
+        }
+        if (req.query?.year) {
+            range = 'year'
+            addUnit = 'y'
+        }    
+        if (range.length > 0) {
+            const dateStart = moment(req.query.date).startOf(range)
+            const dateEnd = dateStart.clone().add(1, addUnit)
+            return getAllSql + " where game_date >= '" + dateStart.format('YYYY-MM-DD') + "' and game_date <= '" + dateEnd.format('YYYY-MM-DD') + "'"
+        }
     }
-    if (!req.body.points[0] && req.body.points[1]){
-        errors.push("Missing game points");
-    }
-    if (errors.length){
-        res.status(400).json({"error":errors.join(",")});
-        return false;
-    }
-    return true;
-}
-
-function getRecords(req) {
-    const body = req.body;
-    let  records = [];
-    [0,1].forEach(entry => {
-        let record = [];
-        record.push(body.scrabbler_ids[entry]);
-        record.push(body.points[entry]);
-        record.push(body.won[entry]);
-        record.push(body.number_bingos[entry]);
-        record.push(body.number_doubtes[entry]);
-        record.push(body.number_wrong_doubtes[entry]);
-        record.push(body.number_correct_doubtes[entry]);
-        record.push(body.game_ended[entry]);
-        record.push(body.left_points[entry]);
-        records.push(record);
-    });
-    return records;
+    return getAllSql
 }
