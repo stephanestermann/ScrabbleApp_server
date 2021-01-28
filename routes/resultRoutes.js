@@ -18,5 +18,8 @@ routes.get('/api/results/downloadDb', (req, res, next) => {
     getResult.getDatabase(req, res, next)
 });
 
+routes.get('/api/results/backupDb', (req, res, next) => {
+    getResult.backupDatabase(req, res, next)
+});
 
 module.exports = routes;
