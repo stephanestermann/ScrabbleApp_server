@@ -23,5 +23,5 @@ yarn-error.log*
 db.sqlite.scrabbleapp
 
 # secrets
-token.js
+token.json
 credentials.json
