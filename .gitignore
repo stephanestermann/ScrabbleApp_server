@@ -21,3 +21,7 @@ yarn-error.log*
 
 # local DB
 db.sqlite.scrabbleapp
+
+# secrets
+token.js
+credentials.json
