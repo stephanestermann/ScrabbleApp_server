@@ -1,11 +1,10 @@
 let path = require('path'); 
-let {db, DBSOURCE} = require("../database.js")
+let { db, DBSOURCE } = require("../database.js")
 let moment = require('moment');
 const Gdrive = require('../gdrive.js');
 
 let ResultStatistic = require('../models/resultStatistic.js');
 const getAllSql ='select * from scrabble_results'
- 
 
 module.exports = {
     getResults: function (req, res) {
@@ -52,8 +51,7 @@ module.exports = {
         }); 
     },
     backupDatabase: function (req, res) {
-        let gDrive = new Gdrive();
-        gDrive.upload(res, DBSOURCE)
+        new Gdrive().upload(res, DBSOURCE)
     }
 }
 
