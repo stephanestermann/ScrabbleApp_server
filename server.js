@@ -42,7 +42,7 @@ app.use('/', routes);
 /**
  * Server Activation
  */
-const HOST = process.env.HOST || '0.0.0.0';
+const HOST = '0.0.0.0';
 const PORT = process.env.PORT || 3000;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 app.listen(PORT, HOST, () => {
