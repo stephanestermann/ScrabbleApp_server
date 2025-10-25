@@ -42,10 +42,12 @@ app.use('/', routes);
 /**
  * Server Activation
  */
-const PORT = process.env.PORT || 3000
-app.listen(PORT, config.HOST, () => {
+const HOST = process.env.HOST || '0.0.0.0';
+const PORT = process.env.PORT || 3000;
+const NODE_ENV = process.env.NODE_ENV || 'development';
+app.listen(PORT, HOST, () => {
     console.log(
-      `Express Server started on http://${config.HOST}:${config.PORT} | Environment : ${config.NODE_ENV}`
+      `Express Server started on http://${HOST}:${PORT} | Environment : ${NODE_ENV}`
     );
 });
 module.exports = app;
