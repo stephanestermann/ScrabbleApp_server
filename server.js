@@ -42,7 +42,8 @@ app.use('/', routes);
 /**
  * Server Activation
  */
-app.listen(config.PORT, config.HOST, () => {
+const PORT = process.env.PORT || 3000
+app.listen(PORT, config.HOST, () => {
     console.log(
       `Express Server started on http://${config.HOST}:${config.PORT} | Environment : ${config.NODE_ENV}`
     );
