@@ -1,23 +1,17 @@
-/**
- * Required External Modules
- */
 const express = require("express");
 const routes = require('./routes/resultRoutes');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const config = require('./config.js');
 
-/**
- * App Variables
- */
-const app = express();
 
-/**
- *  App Configuration
- */
+console.log("UMGEBUNG:", config.NODE_ENV);
+console.log("HOST:", config.HOST);
+console.log("PORT:", config.PORT);
+
+const app = express();
 app.use(logger('tiny'));
 app.use(bodyParser.json());
-
 /**
  * CORS-Config
  */
@@ -29,25 +23,21 @@ app.options("/*", function(req, res, next){
 
 });
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
-
 /**
  * Routes Definitions
  */
 app.use('/', routes);
-
 /**
  * Server Activation
  */
-const HOST = '0.0.0.0';
-const PORT = process.env.PORT || 3000;
-const NODE_ENV = process.env.NODE_ENV || 'development';
-app.listen(PORT, HOST, () => {
+const PORT = process.env.PORT || config.PORT;
+app.listen(PORT, config.HOST, () => {
     console.log(
-      `Express Server started on http://${HOST}:${PORT} | Environment : ${NODE_ENV}`
+      `Express Server started on http://${config.HOST}:${PORT} | Environment : ${config.NODE_ENV}`
     );
 });
 module.exports = app;

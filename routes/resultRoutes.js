@@ -2,6 +2,13 @@ const routes = require('express').Router();
 const postResult = require('./postResult');
 const getResult = require('./getResult');
 
+routes.get('/', (req, res) => {
+    res.status(200).json({
+        status: 'OK',
+        message: 'Der Scrabble-App-Server ist aktiv und betriebsbereit.',
+    });
+});
+
 routes.post('/api/result/', (req, res, next) => {
     postResult.postResult(req, res)
 });
