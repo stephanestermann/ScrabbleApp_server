@@ -17,9 +17,9 @@
   "author": "Stephan Estermann",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.20.4",
+    "body-parser": "^1.20.5",
     "dotenv": "^16.3.1",
-    "express": "^4.22.1",
+    "express": "^4.22.2",
     "google-auth-library": "^9.2.0",
     "googleapis": "^128.0.0",
     "moment": "^2.30.1",
